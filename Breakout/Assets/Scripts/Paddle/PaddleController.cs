@@ -13,6 +13,7 @@ public class PaddleController : MonoBehaviour
     private Camera mainCam;
     private float halfPaddleWidth;
     private float targetX;
+    private bool overwriteKeyboard = false;
 
     private void Start()
     {
@@ -47,14 +48,17 @@ public class PaddleController : MonoBehaviour
                 horizontalInput = 1f;
 
             targetX += horizontalInput * keyboardMoveSpeed * Time.deltaTime;
+            if (horizontalInput != 0) overwriteKeyboard = false;
+
         }
 
         // Mouse input
         if (useMouse && Mouse.current != null)
         {
             Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+            if (!overwriteKeyboard) overwriteKeyboard = Mathf.Abs(mouseDelta.x) > mouseMoveThreshold;
 
-            if (Mathf.Abs(mouseDelta.x) > mouseMoveThreshold)
+            if (overwriteKeyboard)
             {
                 Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
 
