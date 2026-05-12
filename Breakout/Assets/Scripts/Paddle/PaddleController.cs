@@ -70,7 +70,7 @@ public class PaddleController : MonoBehaviour
                     )
                 );
 
-                targetX = Mathf.Lerp(currentX, mouseWorldPos.x, mouseFollowSpeed * Time.deltaTime);
+                targetX = Mathf.MoveTowards(currentX, mouseWorldPos.x, mouseFollowSpeed * Time.deltaTime);
             }
         }
 
