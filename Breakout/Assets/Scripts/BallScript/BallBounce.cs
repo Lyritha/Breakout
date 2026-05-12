@@ -1,34 +1,56 @@
 using System;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
 public class BallBounce : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Vector2 currentVelocity;
+    private bool gameStarted = false;
+    private float offsetY = 0.5f;
+    [SerializeField] private Transform paddle;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        StartBallMovement(rb);
-        currentVelocity = rb.linearVelocity;
+        paddle = FindAnyObjectByType<PaddleController>().transform;
     }
 
-    
-
-    public void StartBallMovement(Rigidbody2D rb)
-    {
-        //Randomize the initial direction of the ball
-        float randomX = Random.Range(-1f, 1f);
-        float randomY = Random.Range(-1f, 1f);
-        Vector2 randomDirection = new Vector2(randomX, randomY).normalized;
-        rb.linearVelocity = randomDirection * 5f; // Adjust the speed as needed
-    }
     private void Update()
     {
-        //draw a normal from the rigidbody
-        Debug.DrawRay(transform.position, rb.linearVelocity.normalized, Color.red);
-   
+        StartingPhase();
     }
+    private void StartingPhase()
+    {
+        if (!gameStarted)
+        {
+            // Ball follows paddle
+            transform.position = paddle.position + new Vector3( 0f, offsetY, 0f);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gameStarted = true;
+                StartBallMovement(rb);
+            }
+        }
+    }
+    
+    private void Reset()
+    {
+        gameStarted = false;
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    private void StartBallMovement(Rigidbody2D rb)
+    {
+        float randomX = Random.Range(-0.8f, 0.8f);
+
+        Vector2 direction = new Vector2(randomX, 1f).normalized;
+
+        rb.linearVelocity = direction * 5f;
+        currentVelocity = rb.linearVelocity;
+    }
+   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -52,5 +74,14 @@ public class BallBounce : MonoBehaviour
             Vector2 reflectDirection = Vector2.Reflect(currentVelocity.normalized, contact.normal);
             rb.linearVelocity = reflectDirection * currentVelocity.magnitude;
             currentVelocity = rb.linearVelocity;
+    }
+    private void OnEnable()
+    {
+        GameEvents.onBallLost += Reset;
+    }
+    
+    private void OnDisable()
+    {
+        GameEvents.onBallLost -= Reset;
     }
 }

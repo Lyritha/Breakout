@@ -33,6 +33,7 @@ public class SpawnColliders : MonoBehaviour
       
       GameObject bottomCollider = new GameObject("BottomCollider");
       BoxCollider2D bottomBoxCollider = bottomCollider.AddComponent<BoxCollider2D>();
+      OnBallBottom onBallBottom = bottomCollider.AddComponent<OnBallBottom>();
       
       bottomBoxCollider.size = new Vector3(bounds.y - bounds.x, 0.1f, 1f);
       bottomBoxCollider.transform.position = new Vector3((bounds.y + bounds.x) * 0.5f, bounds.z, 0f);    

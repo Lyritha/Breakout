@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8c5aaa25-2058-4d24-9e8f-fabc4ee938b5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Breakout/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Breakout/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DennisScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DennisScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Paddle beweging.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Paddle beweging.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BallScript/BallBounce.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BallScript/BallBounce.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BallScript/BallMovement.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BallScript/BallMovement.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BallScript/SpawnColliders.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BallScript/SpawnColliders.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +21,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BallScript/BallMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerHealth.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -114,6 +113,7 @@
       <workItem from="1776943874462" duration="5367000" />
       <workItem from="1778498500874" duration="1171000" />
       <workItem from="1778499798705" duration="4272000" />
+      <workItem from="1778591505453" duration="2485000" />
     </task>
     <servers />
   </component>
