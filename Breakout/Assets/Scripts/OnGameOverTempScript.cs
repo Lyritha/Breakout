@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class OnGameOverTempScript : MonoBehaviour
 {
+    private GameManager gameManager;
+    
+    private void Awake()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
     private void OnEnable()
     {
-        GameEvents.onGameOver += GameOver;
+        GameEvents.onGameOver += gameManager.GameOver;
     }
     
     private void OnDisable()
     {
-        GameEvents.onGameOver -= GameOver;
+        GameEvents.onGameOver -= gameManager.GameOver;
     }
-
-    private void GameOver()
-    {
-        //TODO: Implement game over screen  
-            Debug.Log("Game Over!");
-    }
+    
 }
