@@ -25,7 +25,7 @@ public class BallBounce : MonoBehaviour
         if (!gameStarted)
         {
             // Ball follows paddle
-            transform.position = paddle.position + new Vector3( 0f, offsetY, 0f);
+            transform.position = paddle.position + new Vector3(0f, offsetY, 0f);
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -34,7 +34,7 @@ public class BallBounce : MonoBehaviour
             }
         }
     }
-    
+
     private void Reset()
     {
         gameStarted = false;
@@ -50,36 +50,36 @@ public class BallBounce : MonoBehaviour
         rb.linearVelocity = direction * 5f;
         currentVelocity = rb.linearVelocity;
     }
-   
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //try get paddle controller 
-        if (collision.gameObject.TryGetComponent<PaddleController>(out PaddleController paddleController))
+        if (collision.gameObject.TryGetComponent(out PaddleController paddleController))
         {
-           
-                Vector2 collisionPoint = collision.GetContact(0).point;
-                Vector2 paddleCenter = paddleController.transform.position;
-                float offsetX = collisionPoint.x - paddleCenter.x;
-                float normalizedOffsetX = offsetX / (paddleController.GetComponent<BoxCollider2D>().size.x * 0.5f);
-                
-           
-                Vector2 newDirection = new Vector2(normalizedOffsetX, 1f).normalized; 
-                rb.linearVelocity = newDirection * currentVelocity.magnitude; 
-                currentVelocity = rb.linearVelocity; 
-            
+
+            Vector2 collisionPoint = collision.GetContact(0).point;
+            Vector2 paddleCenter = paddleController.transform.position;
+            float offsetX = collisionPoint.x - paddleCenter.x;
+            float normalizedOffsetX = offsetX / (paddleController.GetComponent<BoxCollider2D>().size.x * 0.5f);
+
+
+            Vector2 newDirection = new Vector2(normalizedOffsetX, 1f).normalized;
+            rb.linearVelocity = newDirection * currentVelocity.magnitude;
+            currentVelocity = rb.linearVelocity;
+
             return;
         }
-            ContactPoint2D contact = collision.GetContact(0);
-            Vector2 reflectDirection = Vector2.Reflect(currentVelocity.normalized, contact.normal);
-            rb.linearVelocity = reflectDirection * currentVelocity.magnitude;
-            currentVelocity = rb.linearVelocity;
+        ContactPoint2D contact = collision.GetContact(0);
+        Vector2 reflectDirection = Vector2.Reflect(currentVelocity.normalized, contact.normal);
+        rb.linearVelocity = reflectDirection * currentVelocity.magnitude;
+        currentVelocity = rb.linearVelocity;
     }
     private void OnEnable()
     {
         GameEvents.onBallLost += Reset;
     }
-    
+
     private void OnDisable()
     {
         GameEvents.onBallLost -= Reset;

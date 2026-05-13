@@ -17,6 +17,8 @@ public class SpawnBlocks : MonoBehaviour
     private SpriteRenderer blockPrefab;
 
     private bool hasGenerated = false;
+    private bool canWin = true;
+
     public List<Block> SpawnedBlocks { get; private set; } = new List<Block>();
 
     private void Awake()
@@ -26,10 +28,11 @@ public class SpawnBlocks : MonoBehaviour
 
     private void Update()
     {
-        if (hasGenerated && SpawnedBlocks.Count == 0)
+        if (hasGenerated && SpawnedBlocks.Count == 0 && canWin)
         {
             // you won!
-            Debug.Log("Level cleared!");
+            canWin = false;
+            GameEvents.onGameWon?.Invoke();
         }
     }
 

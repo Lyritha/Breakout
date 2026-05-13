@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     private int health = 3;
-    private List<SpriteRenderer> healthSprites;
+    private List<Image> healthImage;
 
 
     private void Start()
     {
         
-        healthSprites = new List<SpriteRenderer>();
+        healthImage = new List<Image>();
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             Transform child = transform.GetChild(i);
-
-            SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
-
-            if (spriteRenderer != null)
+            
+            if (child.TryGetComponent<Image>(out var image))
             {
-                healthSprites.Add(spriteRenderer);
+                healthImage.Add(image);
             }
         }
     }
@@ -40,26 +39,17 @@ public class PlayerHealth : MonoBehaviour
        
         health--;
         UpdateHealth();
-        if (health <= 0)
-        {
-            GameEvents.onGameOver?.Invoke();
-        }
+        if (health <= 0) GameEvents.onGameOver?.Invoke();
     }
 
     private void UpdateHealth()
     {
         //Revert the health sprites to red if health is greater than 0, otherwise set them to black
         
-        for (int i = 0; i < healthSprites.Count; i++)
+        for (int i = 0; i < healthImage.Count; i++)
         {
-            if (i < health)
-            {
-                healthSprites[i].color = Color.red;
-            }
-            else
-            {
-                healthSprites[i].color = Color.black;
-            }
+            if (i < health) healthImage[i].color = Color.red;
+            else healthImage[i].color = Color.black;
         }
     }
   

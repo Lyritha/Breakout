@@ -20,10 +20,20 @@ public class WinLoseScreen : MonoBehaviour
             group.interactable = false;
             group.blocksRaycasts = false;
         }
+
+        GameEvents.onGameWon += () => ShowScreen(true);
+        GameEvents.onGameOver += () => ShowScreen(false);
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.onGameWon -= () => ShowScreen(true);
+        GameEvents.onGameOver -= () => ShowScreen(false);
     }
 
     public void ShowScreen(bool hasWon)
     {
+        Cursor.visible = true;
         Time.timeScale = 0;
 
         if (group != null)

@@ -14,32 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
   rows:
   - color: {r: 1, g: 0.6315371, b: 0, a: 1}
-    totalScore: 100
+    score: 10
     slots: 0100010000010001
   - color: {r: 1, g: 1, b: 1, a: 1}
-    totalScore: 100
+    score: 10
     slots: 010000010101000000
   - color: {r: 1, g: 0.5803922, b: 0, a: 1}
-    totalScore: 100
+    score: 10
     slots: 0101010000010101
   - color: {r: 1, g: 1, b: 1, a: 1}
-    totalScore: 100
+    score: 10
     slots: 010000010001000001
   - color: {r: 1, g: 0.6238313, b: 0, a: 1}
-    totalScore: 100
+    score: 10
     slots: 0101000101000101
   - color: {r: 1, g: 1, b: 1, a: 1}
-    totalScore: 100
+    score: 10
     slots: 01010101010101010100
   - color: {r: 1, g: 0.6611853, b: 0, a: 1}
-    totalScore: 100
+    score: 10
     slots: 0100010101010001
   - color: {r: 1, g: 1, b: 1, a: 1}
-    totalScore: 100
+    score: 10
     slots: 010001010001010101
   - color: {r: 1, g: 0.60263634, b: 0, a: 1}
-    totalScore: 100
+    score: 10
     slots: 0001010101010100
   - color: {r: 1, g: 1, b: 1, a: 1}
-    totalScore: 100
+    score: 10
     slots: 01010101010101
