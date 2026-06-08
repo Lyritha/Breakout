@@ -1,12 +1,11 @@
-using NUnit.Framework;
-using System;
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnBlocks : MonoBehaviour
 {
     [SerializeField] 
-    private LevelDefinition level;
+    private LevelDefinition defaultLevel;
 
     [SerializeField]
     private ScreenWorldBounds.PaddingStruct padding;
@@ -21,22 +20,37 @@ public class SpawnBlocks : MonoBehaviour
 
     public List<Block> SpawnedBlocks { get; private set; } = new List<Block>();
 
-    private void Awake()
+    private void Start()
     {
-        GenerateLevel();
+        bool hasManager = LevelManager.Instance != null;
+        Debug.Log($"SpawnBlocks: Found LevelManager: {hasManager}");
+        Debug.Log($"SpawnBlocks: Using level: {(hasManager ? LevelManager.Instance.CurrentLevel.levelName : defaultLevel.levelName)}");
+
+        LevelDefinition level = hasManager ? LevelManager.Instance.CurrentLevel : defaultLevel;
+        if (hasManager) LevelManager.LevelChanged += GenerateLevel;
+
+        GenerateLevel(level);
     }
 
     private void Update()
     {
         if (hasGenerated && SpawnedBlocks.Count == 0 && canWin)
         {
-            // you won!
-            canWin = false;
-            GameEvents.onGameWon?.Invoke();
+            if (LevelManager.Instance != null)
+            {
+                if (!LevelManager.Instance.HasNextLevel()) Win();
+                // else load next level, handled by LevelChanged event
+            } else Win();
         }
     }
 
-    public void GenerateLevel()
+    private void Win()
+    {
+        canWin = false;
+        GameEvents.onGameWon?.Invoke();
+    }
+
+    public void GenerateLevel(LevelDefinition level)
     {
         Bounds bounds = ScreenWorldBounds.GetPaddedBounds2D(Camera.main, padding);
 
@@ -51,12 +65,12 @@ public class SpawnBlocks : MonoBehaviour
         Vector2 blockSize = new(cellSize.x - spacing, cellSize.y - spacing);
 
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
-            GenerateRow(rowIndex, bounds, cellSize, blockSize);
+            GenerateRow(level, rowIndex, bounds, cellSize, blockSize);
 
         hasGenerated = true;
     }
 
-    private void GenerateRow(int rowIndex, Bounds bounds, Vector2 cellSize, Vector2 blockSize)
+    private void GenerateRow(LevelDefinition level, int rowIndex, Bounds bounds, Vector2 cellSize, Vector2 blockSize)
     {
         LevelRow row = level.rows[rowIndex];
         int blocksInRow = row.slots.Length;
@@ -88,14 +102,15 @@ public class SpawnBlocks : MonoBehaviour
         }
     }
 
-
+    private void OnDestroy()
+    {
+        if (LevelManager.Instance != null) LevelManager.LevelChanged -= GenerateLevel;
+    }
 
     private void OnDrawGizmos()
     {
         Bounds b = ScreenWorldBounds.GetPaddedBounds2D(Camera.main, padding);
         Gizmos.DrawWireCube(b.center, b.size);
     }
-
-
 }
 

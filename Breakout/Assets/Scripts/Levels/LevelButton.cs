@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
@@ -11,12 +12,13 @@ public class LevelButton : MonoBehaviour
     [SerializeField]
     private Button button;
 
-    private LevelDefinition level;
+    private int levelIndex;
 
-
-    public void SetLevel(LevelDefinition level)
+    public void SetLevel(int index)
     {
-        this.level = level;
+        this.levelIndex = index;
+        LevelDefinition level = LevelManager.Instance.Levels[index];
+
         text.text = level.levelName;
         background.color = level.levelColor;
 
@@ -25,6 +27,7 @@ public class LevelButton : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log($"Selected level: {level.name}");
+        LevelManager.Instance.LoadLevel(levelIndex);
+        SceneManager.LoadScene(1);
     }
 }

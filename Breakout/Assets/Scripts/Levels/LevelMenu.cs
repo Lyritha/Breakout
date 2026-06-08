@@ -7,17 +7,18 @@ public class LevelMenu : MonoBehaviour
     [SerializeField]
     private LevelButton levelButtonPrefab;
 
-
-    [SerializeField]
-    private LevelList levels;
-
-
     private void Start()
     {
-        foreach (LevelDefinition level in levels.levels)
+        if (LevelManager.Instance == null)
+        {
+            Debug.LogError("LevelManager instance is not initialized.");
+            return;
+        }
+
+        for (int i = 0; i < LevelManager.Instance.Levels.Length; i++)
         {
             LevelButton button = Instantiate(levelButtonPrefab, parent);
-            button.SetLevel(level);
+            button.SetLevel(i);
         }
     }
 }
