@@ -11,7 +11,7 @@ public class BossHealth : MonoBehaviour
     
     //Make the boss color change to red by impact
     private SpriteRenderer bossSpriteRenderer;
-
+    private Coroutine flashCoroutine;
 
     private void Start()
     {
@@ -30,11 +30,14 @@ public class BossHealth : MonoBehaviour
         {
             bossSpriteRenderer = GetComponent<SpriteRenderer>();
         }
-        
-        if (bossSpriteRenderer != null)
+
+        if (bossSpriteRenderer == null) return;
+
+        if (flashCoroutine != null)
         {
-            StartCoroutine(FlashRedCoroutine());
+            StopCoroutine(flashCoroutine);
         }
+        StartCoroutine(FlashRedCoroutine());
     }
 
     private IEnumerator FlashRedCoroutine()
