@@ -34,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
         GameEvents.onBallLost -= TakeDamage;
     }
 
-    private void TakeDamage()
+    public void TakeDamage()
     {
        
         health--;

@@ -71,4 +71,9 @@ public class BossHealth : MonoBehaviour
             TakeDamage(1);
         }
     }
+    
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
 }

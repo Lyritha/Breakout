@@ -358,7 +358,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1167730190}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 918faaa577790794f8cf7d0aa3d244ca, type: 3}
   m_Name: 
@@ -366,6 +366,19 @@ MonoBehaviour:
   spawnType: 0
   spawnDuration: 3
   startYOffset: 5
+--- !u!114 &1167730202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167730190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc89b98afd23e09498835bafd52544f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossController
+  currentState: 0
 --- !u!1 &1377707343
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +466,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 549151412415043972, guid: 2deda3c3430727e49b093df133c0ab5e, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 1167730202}
     - target: {fileID: 2088110697374111774, guid: 2deda3c3430727e49b093df133c0ab5e, type: 3}
       propertyPath: m_Name
       value: Boss
@@ -514,6 +531,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2088110697374111774, guid: 2deda3c3430727e49b093df133c0ab5e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1167730201}
+    - targetCorrespondingSourceObject: {fileID: 2088110697374111774, guid: 2deda3c3430727e49b093df133c0ab5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1167730202}
   m_SourcePrefab: {fileID: 100100000, guid: 2deda3c3430727e49b093df133c0ab5e, type: 3}
 --- !u!1001 &1572190917
 PrefabInstance:
@@ -566,6 +586,14 @@ PrefabInstance:
     - target: {fileID: 3613012651619709454, guid: 5bca60aee4bc34b4b815427c02d9f303, type: 3}
       propertyPath: m_Name
       value: Paddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613012651619709454, guid: 5bca60aee4bc34b4b815427c02d9f303, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613012651619709454, guid: 5bca60aee4bc34b4b815427c02d9f303, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -798,7 +826,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089763284}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 918faaa577790794f8cf7d0aa3d244ca, type: 3}
   m_Name: 

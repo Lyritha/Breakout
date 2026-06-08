@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BossMovement : MonoBehaviour
 {
@@ -11,6 +13,13 @@ public class BossMovement : MonoBehaviour
 
   private Rigidbody2D rb;
   private bool goingRight = true;
+  
+  BossController controller;
+  private Vector2 moveDirection;
+  private void Awake()
+  {
+    controller = GetComponent<BossController>();
+  }
 
   private void Start()
   {
@@ -24,6 +33,13 @@ public class BossMovement : MonoBehaviour
 
   private void Update()
   {
+    if (controller.currentState != BossState.Moving)
+    {
+     rb.linearVelocity = Vector2.zero;
+      return;
+    }
+
+    Move();
     ChangeDirectionOnScreenBounds();
     if (Time.time > time + changeTime)
     {
@@ -56,16 +72,20 @@ public class BossMovement : MonoBehaviour
     
   }
 
+  private void Move()
+  {
+    rb.linearVelocity = moveDirection * speed;
+  }
   private void ChangeDirection()
   {
     goingRight = !goingRight;
     if (goingRight)
     {
-      rb.linearVelocity = Vector2.right * speed;
+      moveDirection = rb.linearVelocity = Vector2.right * speed;
     }
     else
     {
-      rb.linearVelocity = Vector2.left * speed;
+      moveDirection = rb.linearVelocity = Vector2.left * speed;
     }
   }
 }
