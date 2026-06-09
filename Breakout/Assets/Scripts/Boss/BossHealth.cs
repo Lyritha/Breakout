@@ -12,6 +12,7 @@ public class BossHealth : MonoBehaviour
     //Make the boss color change to red by impact
     private SpriteRenderer bossSpriteRenderer;
     private Coroutine flashCoroutine;
+    public event Action OnBossDied;
 
     private void Start()
     {
@@ -60,6 +61,7 @@ public class BossHealth : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
+            OnBossDied?.Invoke();
             GameEvents.onGameWon?.Invoke();
         }
     }
