@@ -84,7 +84,7 @@ public class LaserBeam2D : MonoBehaviour
         {
             line.SetPosition(1, hit.point);
 
-            if (!hasHitPlayer && hit.collider.CompareTag("Player"))
+            if (!hasHitPlayer && hit.transform.TryGetComponent<PaddleController>(out var player))
             {
                 hasHitPlayer = true;
                 hit.collider.GetComponent<PlayerHealth>().TakeDamage();
