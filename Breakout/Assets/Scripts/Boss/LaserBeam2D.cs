@@ -1,14 +1,18 @@
-using System;
+ using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class LaserBeam2D : MonoBehaviour
 {
-    public LineRenderer line;
+    public LineRenderer laserBeam;
     public Transform firePoint;
     public float maxDistance = 20f;
-    public LayerMask hitMask;
+    public LayerMask hitMaskLaser;
+    public LayerMask hitMaskWarningLaser;
+
+    public LineRenderer warningLine;
+    private float warningDuration = 1f;
 
     public float minWait = 1f;
     public float maxWait = 5f;
@@ -29,8 +33,24 @@ public class LaserBeam2D : MonoBehaviour
 
     private void Start()
     {
-        line.enabled = false;
+        laserBeam.enabled = false;
+        warningLine.enabled = false;
         StartCoroutine(LaserLoop());
+    }
+    
+    void DrawWarningLaser()
+    {
+        Vector2 origin = firePoint.position;
+        Vector2 direction = -firePoint.up;  
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxDistance, hitMaskWarningLaser);
+
+        warningLine.SetPosition(0, origin);
+
+        if (hit.collider != null)
+            warningLine.SetPosition(1, hit.point);
+        else
+            warningLine.SetPosition(1, origin + direction * maxDistance);
     }
 
     IEnumerator LaserLoop()
@@ -42,9 +62,15 @@ public class LaserBeam2D : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
 
             controller.currentState = BossState.Attacking;
+            
+            // WARNING PHASE
+            DrawWarningLaser();
+            warningLine.enabled = true;
+            yield return new WaitForSeconds(warningDuration);
+            warningLine.enabled = false;
             // 🔥 START LASER
             hasHitPlayer = false;
-            line.enabled = true;
+            laserBeam.enabled = true;
 
             float t = 0f;
 
@@ -58,13 +84,13 @@ public class LaserBeam2D : MonoBehaviour
 
                 float width = baseWidth + pulse * maxLaserWidth;
 
-                line.startWidth = width;
-                line.endWidth = width;
+                laserBeam.startWidth = width;
+                laserBeam.endWidth = width;
                 yield return null;
             }
 
             // 🧊 STOP LASER
-            line.enabled = false;
+            laserBeam.enabled = false;
 
             controller.currentState = BossState.Moving;
             yield return new WaitForSeconds(1f); // cooldown
@@ -76,23 +102,24 @@ public class LaserBeam2D : MonoBehaviour
         Vector2 origin = firePoint.position;
         Vector2 direction = -firePoint.up;
 
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxDistance, hitMask);
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxDistance, hitMaskLaser);
 
-        line.SetPosition(0, origin);
+        laserBeam.SetPosition(0, origin);
 
         if (hit.collider != null)
         {
-            line.SetPosition(1, hit.point);
+            laserBeam.SetPosition(1, hit.point);
 
             if (!hasHitPlayer && hit.transform.TryGetComponent<PaddleController>(out var player))
             {
+                if (hit.collider.GetComponent<PlayerHealth>() == null) return;
                 hasHitPlayer = true;
                 hit.collider.GetComponent<PlayerHealth>().TakeDamage();
             }
         }
         else
         {
-            line.SetPosition(1, origin + direction * maxDistance);
+            laserBeam.SetPosition(1, origin + direction * maxDistance);
         }
     }
 }
