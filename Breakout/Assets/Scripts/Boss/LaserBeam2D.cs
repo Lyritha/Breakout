@@ -5,26 +5,22 @@ using Random = UnityEngine.Random;
 
 public class LaserBeam2D : MonoBehaviour
 {
-    public LineRenderer laserBeam;
-    public Transform firePoint;
-    public float maxDistance = 20f;
-    public LayerMask hitMaskLaser;
-    public LayerMask hitMaskWarningLaser;
-
-    public LineRenderer warningLine;
-    private float warningDuration = 1f;
-
-    public float minWait = 1f;
-    public float maxWait = 5f;
-    public float fireDuration = 0.5f;
-
+    private float maxDistance = 20f;
     private bool hasHitPlayer;
-
-    [SerializeField] BossController controller;
+    [SerializeField] private LineRenderer laserBeam;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private LayerMask hitMaskLaser;
+    [SerializeField] private LayerMask hitMaskWarningLaser;
+    [SerializeField] LineRenderer warningLine;
     
-    float pulseSpeed = 10f;
-    float baseWidth = 0.05f;
-    float maxLaserWidth = 0.5f;
+    //Changeable in inspector for balance changes if needed
+    [SerializeField] float warningDuration = 0.5f;
+    [SerializeField] float minWait = 1f;
+    [SerializeField] float maxWait = 5f;
+    [SerializeField] float fireDuration = 0.5f;
+    [SerializeField] BossController controller;
+    [SerializeField]float baseWidth = 0.05f;
+    [SerializeField]float maxLaserWidth = 0.5f;
 
     private void Awake()
     {
@@ -63,12 +59,12 @@ public class LaserBeam2D : MonoBehaviour
 
             controller.currentState = BossState.Attacking;
             
-            // WARNING PHASE
+            //Attack indicator
             DrawWarningLaser();
             warningLine.enabled = true;
             yield return new WaitForSeconds(warningDuration);
             warningLine.enabled = false;
-            // 🔥 START LASER
+            //Starts firing the laser
             hasHitPlayer = false;
             laserBeam.enabled = true;
 
@@ -89,7 +85,7 @@ public class LaserBeam2D : MonoBehaviour
                 yield return null;
             }
 
-            // 🧊 STOP LASER
+            //Stop firing
             laserBeam.enabled = false;
 
             controller.currentState = BossState.Moving;
@@ -106,20 +102,24 @@ public class LaserBeam2D : MonoBehaviour
 
         laserBeam.SetPosition(0, origin);
 
-        if (hit.collider != null)
-        {
-            laserBeam.SetPosition(1, hit.point);
-
-            if (!hasHitPlayer && hit.transform.TryGetComponent<PaddleController>(out var player))
-            {
-                if (hit.collider.GetComponent<PlayerHealth>() == null) return;
-                hasHitPlayer = true;
-                hit.collider.GetComponent<PlayerHealth>().TakeDamage();
-            }
-        }
-        else
+        if (hit.collider == null)
         {
             laserBeam.SetPosition(1, origin + direction * maxDistance);
+            return;
         }
+
+        laserBeam.SetPosition(1, hit.point);
+
+        if (hasHitPlayer)
+            return;
+
+        if (!hit.transform.TryGetComponent<PaddleController>(out _))
+            return;
+
+        if (!hit.collider.TryGetComponent<PlayerHealth>(out var health))
+            return;
+
+        hasHitPlayer = true;
+        health.TakeDamage();
     }
 }

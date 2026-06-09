@@ -5,10 +5,10 @@ using System.Collections;
 public class DropInSpawn : MonoBehaviour
 {
     public enum SpawnType { WorldObject, UI }
-    public SpawnType spawnType;
+    [SerializeField] SpawnType spawnType;
 
-    public float spawnDuration = 1f;
-    public float startYOffset = 5f;
+    [SerializeField] float spawnDuration = 1f;
+    [SerializeField] float startYOffset = 5f;
 
     private Vector3 worldTarget;
     private RectTransform rect;
