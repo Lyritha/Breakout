@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8c5aaa25-2058-4d24-9e8f-fabc4ee938b5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Breakout/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Breakout/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Boss/Boss.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Boss/Boss.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DennisScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DennisScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Boss/BossController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Boss/BossController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Boss/LaserBeam2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Boss/LaserBeam2D.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +114,7 @@
       <workItem from="1778591505453" duration="2485000" />
       <workItem from="1780572115318" duration="3486000" />
       <workItem from="1780942337204" duration="8752000" />
-      <workItem from="1781018803526" duration="2893000" />
+      <workItem from="1781018803526" duration="4819000" />
     </task>
     <servers />
   </component>
