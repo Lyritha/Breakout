@@ -16,6 +16,7 @@ public class Block : MonoBehaviour
         if (parent != null) parent.SpawnedBlocks.Remove(this);
 
         Score.Add(score);
+        if (Screenshake.Instance != null) Screenshake.Instance.Shake();
 
         Destroy(gameObject);
     }
