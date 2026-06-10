@@ -17,6 +17,9 @@ public class Block : MonoBehaviour
 
         Score.Add(score);
 
+        GetComponent<BlockAudio>()?.PlayBreakSound();
+        GetComponent<BlockParticleEffect>()?.SpawnParticles();
+
         Destroy(gameObject);
     }
 }
