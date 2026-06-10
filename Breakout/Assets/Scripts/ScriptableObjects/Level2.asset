@@ -10,38 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6a86abb59ed8b442a73f6bb20123194, type: 3}
-  m_Name: Level1
+  m_Name: Level2
   m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
-  levelName: Level 1
-  levelColor: {r: 1, g: 0.19999999, b: 0.25707483, a: 1}
+  levelName: Level 2
+  levelColor: {r: 1, g: 0.6489907, b: 0, a: 1}
   rows:
-  - color: {r: 1, g: 0.20000002, b: 0.25882354, a: 1}
+  - color: {r: 1, g: 0.6315371, b: 0, a: 1}
     score: 10
-    slots: 0100010000010001
+    slots: 0001010101010100
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
     slots: 010000010101000000
-  - color: {r: 1, g: 0.20000002, b: 0.25882354, a: 1}
+  - color: {r: 1, g: 0.5803922, b: 0, a: 1}
     score: 10
     slots: 0101010000010101
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
-    slots: 010000010001000001
-  - color: {r: 1, g: 0.20000002, b: 0.25882354, a: 1}
+    slots: 000000000000000000
+  - color: {r: 1, g: 0.6238313, b: 0, a: 1}
     score: 10
-    slots: 0101000101000101
+    slots: 0000000000000000
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
-    slots: 01010101010101010101
+    slots: 00000000000000000000
+  - color: {r: 1, g: 0.6611853, b: 0, a: 1}
+    score: 10
+    slots: 0100010101010001
   - color: {r: 1, g: 1, b: 1, a: 1}
-    score: 0
-    slots: 0000000000
+    score: 10
+    slots: 010001010001010001
+  - color: {r: 1, g: 0.60263634, b: 0, a: 1}
+    score: 10
+    slots: 0001010101010100
   - color: {r: 1, g: 1, b: 1, a: 1}
-    score: 0
-    slots: 0000000000
-  - color: {r: 1, g: 1, b: 1, a: 1}
-    score: 0
-    slots: 0000000000
-  - color: {r: 1, g: 1, b: 1, a: 1}
-    score: 0
-    slots: 0000000000
+    score: 10
+    slots: 01010100010101

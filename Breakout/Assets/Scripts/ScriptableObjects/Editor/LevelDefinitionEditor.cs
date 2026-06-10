@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 [CustomEditor(typeof(LevelDefinition))]
 public class LevelDefinitionEditor : Editor
@@ -12,6 +13,12 @@ public class LevelDefinitionEditor : Editor
         LevelDefinition level = (LevelDefinition)target;
         level.rows ??= new LevelRow[0];
 
+        EditorGUILayout.BeginHorizontal();
+        level.levelColor = EditorGUILayout.ColorField(level.levelColor, GUILayout.Width(60));
+        level.levelName = EditorGUILayout.TextField(level.levelName);
+        EditorGUILayout.EndHorizontal();
+
+
         int widest = GetWidest(level);
 
         EditorGUILayout.Space(10);
@@ -22,10 +29,7 @@ public class LevelDefinitionEditor : Editor
             EditorGUILayout.Space(5);
         }
 
-        DrawAddRemove(level);
-
-        if (GUI.changed)
-            EditorUtility.SetDirty(level);
+        if (GUI.changed) EditorUtility.SetDirty(level);
     }
 
     int GetWidest(LevelDefinition level)
@@ -116,17 +120,5 @@ public class LevelDefinitionEditor : Editor
     void DrawSlotToggle(LevelRow row, int index, Rect r)
     {
         row.slots[index] = GUI.Toggle(r, row.slots[index], GUIContent.none, GUIStyle.none);
-    }
-
-    void DrawAddRemove(LevelDefinition level)
-    {
-        EditorGUILayout.Space(10);
-
-        if (GUILayout.Button("Add Row"))
-            ArrayUtility.Add(ref level.rows, new LevelRow { slots = new bool[5] });
-
-        if (GUILayout.Button("Remove Last Row"))
-            if (level.rows.Length > 0)
-                ArrayUtility.RemoveAt(ref level.rows, level.rows.Length - 1);
     }
 }

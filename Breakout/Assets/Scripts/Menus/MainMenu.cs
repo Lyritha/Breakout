@@ -3,14 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void GoMainMenu()
+    [SerializeField]
+    private RectTransform mainScreen;
+    [SerializeField]
+    private RectTransform levelScreen;
+
+    private void Awake() => ShowMain();
+
+    public void ShowMain()
     {
-        SceneManager.LoadScene(0);
+        mainScreen.gameObject.SetActive(true);
+        levelScreen.gameObject.SetActive(false);
     }
 
-    public void StartGame()
+    public void ShowLevels()
     {
-        SceneManager.LoadScene(1);
+        mainScreen.gameObject.SetActive(false);
+        levelScreen.gameObject.SetActive(true);
     }
 
     public void QuitGame()

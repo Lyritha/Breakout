@@ -15,6 +15,7 @@ public class SpawnColliders : MonoBehaviour
       //Spawn something at bounds
       GameObject leftCollider = new GameObject("LeftCollider");
       BoxCollider2D leftBoxCollider = leftCollider.AddComponent<BoxCollider2D>();
+      leftCollider.AddComponent<ShakeableWall>();
       leftCollider.layer = LayerMask.NameToLayer("Bounds");
       
       leftBoxCollider.size = new Vector3(0.1f, bounds.w - bounds.z, 1f);
@@ -22,6 +23,7 @@ public class SpawnColliders : MonoBehaviour
       
       GameObject rightCollider = new GameObject("RightCollider");
       BoxCollider2D rightBoxCollider = rightCollider.AddComponent<BoxCollider2D>();
+             rightCollider.AddComponent<ShakeableWall>();
          rightCollider.layer = LayerMask.NameToLayer("Bounds");
       
       rightBoxCollider.size = new Vector3(0.1f, bounds.w - bounds .z, 1f);
@@ -29,6 +31,7 @@ public class SpawnColliders : MonoBehaviour
       
       GameObject topCollider = new GameObject("TopCollider");
       BoxCollider2D topBoxCollider = topCollider.AddComponent<BoxCollider2D>();
+        topCollider.AddComponent<ShakeableWall>();
          topCollider.layer = LayerMask.NameToLayer("Bounds");
       
       topBoxCollider.size = new Vector3(bounds.y - bounds.x, 0.1f, 1f);

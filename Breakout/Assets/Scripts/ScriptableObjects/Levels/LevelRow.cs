@@ -5,6 +5,6 @@ public class LevelRow
 {
     public Color color = Color.white;
     public int score = 10;
-    public bool[] slots;
+    public bool[] slots = new bool[9];
 }
 
