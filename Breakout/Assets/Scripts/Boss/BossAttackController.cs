@@ -22,8 +22,9 @@ public class BossAttackController : MonoBehaviour
             controller.currentState = BossState.Attacking;
 
             laser.StartAttack();
+            Screenshake.Instance.Shake();
 
-            yield return new WaitForSeconds(1f); // cooldown
+            yield return new WaitForSeconds(laser.GetFireDuration() + 0.5f); // small delay
             
             controller.currentState = BossState.Moving;
         }

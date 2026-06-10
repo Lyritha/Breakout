@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8874268608135311609}
   - component: {fileID: 5790070965992017569}
   - component: {fileID: 1604008702380582563}
+  - component: {fileID: 2988073911432549836}
   m_Layer: 0
   m_Name: Paddle
   m_TagString: Untagged
@@ -169,3 +170,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6651f8a4f708a844924890b5113c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlicedSpriteCollider
+--- !u!114 &2988073911432549836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3613012651619709454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0267fb487b4afe44baf09887647357e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPaddle

@@ -120,4 +120,9 @@ public class LaserBeam2D : MonoBehaviour
         hasHit = true;
         onHit?.Invoke(hit);
     }
+
+    public float GetFireDuration()
+    {
+        return fireDuration;
+    }
 }

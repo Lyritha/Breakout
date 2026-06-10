@@ -8,6 +8,7 @@ public class KillBox : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out BallBounce ballBounce))
         {
             GameEvents.onBallLost?.Invoke();
+            GameEvents.onBallReset?.Invoke();
         }
     }
 }

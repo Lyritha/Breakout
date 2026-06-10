@@ -8,7 +8,8 @@ public class MiniLaserSpawner : MonoBehaviour
     [SerializeField] private GameObject miniLaserPrefab;
 
     private bool spawned90 = false;
-    private bool spawned50 = false;
+    private bool spawned60 = false;
+    private bool spawned30 = false;
 
     private void Awake()
     {
@@ -26,11 +27,19 @@ public class MiniLaserSpawner : MonoBehaviour
             spawned90 = true;
         }
 
-        if (!spawned50 && current <= max * 0.5f)
+        if (!spawned60 && current <= max * 0.6f)
         {
             SpawnMiniLasers();
-            spawned50 = true;
+            spawned60 = true;
         }
+        
+        if (!spawned30 && current <= max * 0.3f)
+        {
+            SpawnMiniLasers();
+            spawned30 = true;
+        }
+        
+        
     }
 
     private void SpawnMiniLasers()

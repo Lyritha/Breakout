@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviour
 {
-    private int currentHealth = 20;
-    private int maxHealth = 20;
+    private int currentHealth = 30;
+    private int maxHealth = 30;
     [SerializeField] private Image healthBarFill;
+    public Image HealthBarFill => healthBarFill;
     
     //Make the boss color change to red by impact
     private SpriteRenderer bossSpriteRenderer;
     private Coroutine flashCoroutine;
     public event Action OnBossDied;
 
-    private void Start()
-    {
-        UpdateHealthBar();
-    }
+   
+
+
 
     private void UpdateHealthBar()
     {
@@ -83,4 +83,11 @@ public class BossHealth : MonoBehaviour
     {
         return maxHealth;
     }
+
+    public void SetHealthBarFill(Image healthBarImage)
+    {
+        healthBarFill = healthBarImage;
+        UpdateHealthBar();
+    }
+    
 }

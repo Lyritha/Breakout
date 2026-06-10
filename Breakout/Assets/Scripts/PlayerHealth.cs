@@ -13,11 +13,13 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.onBallLost += TakeDamage;
+        GameEvents.onTakeDamage += TakeDamage;
     }
     
     private void OnDisable()
     {
         GameEvents.onBallLost -= TakeDamage;
+        GameEvents.onTakeDamage -= TakeDamage;
     }
 
     public void TakeDamage()
@@ -26,8 +28,6 @@ public class PlayerHealth : MonoBehaviour
         health--;
         UpdateHealth();
         if (health <= 0) GameEvents.onGameOver?.Invoke();
-
-        GameEvents.onBallReset?.Invoke();
     }
 
     private void UpdateHealth()

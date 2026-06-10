@@ -104,15 +104,15 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 1, g: 1, b: 1, a: 0}
+      key0: {r: 1, g: 0, b: 0, a: 0.39215687}
+      key1: {r: 1, g: 0, b: 0, a: 0.39215687}
+      key2: {r: 1, g: 1, b: 1, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 33384
+      ctime0: 0
       ctime1: 65535
       ctime2: 65535
       ctime3: 0
@@ -122,7 +122,7 @@ LineRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -154,6 +154,14 @@ GameObject:
   - component: {fileID: 8916494592590355030}
   - component: {fileID: 3301044635548743332}
   - component: {fileID: 3187335196602189570}
+  - component: {fileID: 5799986048718787592}
+  - component: {fileID: 8057650224267960610}
+  - component: {fileID: 3802836038355034073}
+  - component: {fileID: 8944946877112482868}
+  - component: {fileID: 1003203234737531330}
+  - component: {fileID: 5155742381516179036}
+  - component: {fileID: 4188514868534663273}
+  - component: {fileID: 1973405894803403832}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -295,6 +303,131 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &5799986048718787592
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 6
+--- !u!114 &8057650224267960610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918faaa577790794f8cf7d0aa3d244ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropInSpawn
+  spawnType: 0
+  spawnDuration: 3
+  startYOffset: 5
+--- !u!114 &3802836038355034073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc89b98afd23e09498835bafd52544f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossController
+  currentState: 0
+--- !u!114 &8944946877112482868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8d0813c90a9dd4b84de0613f9e44d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossMovementController
+  enemyMovement: {fileID: 1003203234737531330}
+  controller: {fileID: 3802836038355034073}
+--- !u!114 &1003203234737531330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041a6fb565dd34d42841cc6821e96b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  speed: 2
+  CanMove: 1
+--- !u!114 &5155742381516179036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c7f9949ae5156459163eb6c523d7ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossAttackController
+  laser: {fileID: 549151412415043972}
+  controller: {fileID: 3802836038355034073}
+  minDelay: 1
+  maxDelay: 6
+--- !u!114 &4188514868534663273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb3d5f4ce720c04abb311664b2f954d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MiniLaserSpawner
+  miniLaserPrefab: {fileID: 104382204081086227, guid: 5f35184dca117174caa38de05971a005, type: 3}
+--- !u!114 &1973405894803403832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088110697374111774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22dd9ca27c7e31e4e84cb27e1e28af13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossHitHandler
+  laser: {fileID: 549151412415043972}
 --- !u!1 &5575507483731438864
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,14 +680,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a262ecfc954d44b99a2c66fade265b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserBeam2D
-  laserBeam: {fileID: 0}
+  laserBeam: {fileID: 5393149800350123795}
   firePoint: {fileID: 3208948929477155383}
-  maxDistance: 10
-  hitMask:
+  hitMaskLaser:
     serializedVersion: 2
     m_Bits: 192
-  warningLine: {fileID: 0}
-  minWait: 1
-  maxWait: 5
+  warningLine: {fileID: 7399682443838971351}
+  warningDuration: 0.5
+  warningLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   fireDuration: 0.5
-  controller: {fileID: 0}
+  maxDistance: 10
+  baseWidth: 0.05
+  maxLaserWidth: 1

@@ -11,9 +11,9 @@ public class BossHitHandler : MonoBehaviour
 
     void HandleHit(RaycastHit2D hit)
     {
-        if (hit.collider.CompareTag("Player"))
+        if (hit.collider.TryGetComponent( out PaddleController _))
         {
-            GameEvents.onBallLost?.Invoke();
+            GameEvents.onTakeDamage?.Invoke();
         }
     }
 }
