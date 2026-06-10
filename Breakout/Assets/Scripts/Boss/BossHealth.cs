@@ -62,7 +62,9 @@ public class BossHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             OnBossDied?.Invoke();
+            ScoreManager.Instance.AddScore(5000);
             GameEvents.onGameWon?.Invoke();
+            
         }
     }
 
