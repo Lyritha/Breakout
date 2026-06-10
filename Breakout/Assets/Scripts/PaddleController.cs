@@ -48,7 +48,11 @@ public class PaddleController : MonoBehaviour
                 horizontalInput = 1f;
 
             targetX += horizontalInput * keyboardMoveSpeed * Time.deltaTime;
-            if (horizontalInput != 0) overwriteKeyboard = false;
+            if (horizontalInput != 0)
+            {
+                Cursor.visible = false;
+                overwriteKeyboard = false;
+            }
 
         }
 
@@ -60,6 +64,7 @@ public class PaddleController : MonoBehaviour
 
             if (overwriteKeyboard)
             {
+                Cursor.visible = true;
                 Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
 
                 Vector3 mouseWorldPos = mainCam.ScreenToWorldPoint(
@@ -70,7 +75,7 @@ public class PaddleController : MonoBehaviour
                     )
                 );
 
-                targetX = Mathf.Lerp(currentX, mouseWorldPos.x, mouseFollowSpeed * Time.deltaTime);
+                targetX = Mathf.MoveTowards(currentX, mouseWorldPos.x, mouseFollowSpeed * Time.deltaTime);
             }
         }
 
