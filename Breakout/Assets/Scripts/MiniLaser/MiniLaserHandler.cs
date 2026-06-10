@@ -11,9 +11,9 @@ public class MiniLaserHandler : MonoBehaviour
 
     void HandleHit(RaycastHit2D hit)
     {
-        if (hit.collider.TryGetComponent<PlayerHealth>(out var player))
+        if (hit.collider.TryGetComponent<PlayerPaddle>(out var player))
         {
-            player.TakeDamage();
+            player.HalveScale();
         }
     }
 }

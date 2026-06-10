@@ -19,6 +19,7 @@ public class MiniLaserAttackController : MonoBehaviour
     
     private void Awake()
     {
+        bossHealth = FindAnyObjectByType<BossHealth>();
         bossHealth.OnBossDied += HandleBossDeath;
     }
 

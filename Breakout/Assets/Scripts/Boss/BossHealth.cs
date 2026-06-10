@@ -78,4 +78,9 @@ public class BossHealth : MonoBehaviour
     {
         return currentHealth;
     }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
 }
