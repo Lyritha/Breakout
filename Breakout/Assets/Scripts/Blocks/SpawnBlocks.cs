@@ -23,8 +23,6 @@ public class SpawnBlocks : MonoBehaviour
     private void Start()
     {
         bool hasManager = LevelManager.Instance != null;
-        Debug.Log($"SpawnBlocks: Found LevelManager: {hasManager}");
-        Debug.Log($"SpawnBlocks: Using level: {(hasManager ? LevelManager.Instance.CurrentLevel.levelName : defaultLevel.levelName)}");
 
         LevelDefinition level = hasManager ? LevelManager.Instance.CurrentLevel : defaultLevel;
         if (hasManager) LevelManager.LevelChanged += GenerateLevel;
