@@ -2,92 +2,78 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PaddleController : MonoBehaviour
-
 {
-    [Header("Movement Settings")] [SerializeField]
-    private float keyboardMoveSpeed = 10f;
-
+    [Header("Movement Settings")]
+    [SerializeField] private float keyboardMoveSpeed = 10f;
     [SerializeField] private float mouseFollowSpeed = 8f;
-
     [SerializeField] private bool useKeyboard = true;
-
     [SerializeField] private bool useMouse = true;
-
     [SerializeField] private float mouseMoveThreshold = 0.01f;
 
     private Camera mainCam;
-
-    private SpriteRenderer sr;
-
+    private float halfPaddleWidth;
     private float targetX;
-
     private bool overwriteKeyboard = false;
 
     private void Start()
-
     {
         mainCam = Camera.main;
-
         targetX = transform.position.x;
 
-        sr = GetComponent<SpriteRenderer>();
-
-        if (sr == null)
-
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            halfPaddleWidth = sr.bounds.extents.x;
+        }
+        else
+        {
             Debug.LogWarning("Paddle heeft geen SpriteRenderer.");
+        }
     }
 
     private void Update()
-
     {
-        float halfPaddleWidth = sr != null ? sr.bounds.extents.x : 0f;
-
         float currentX = transform.position.x;
-
         targetX = currentX;
 
+        // --- NEW: Slowdown factor ---
+        bool slowKey = Keyboard.current.leftShiftKey.isPressed
+                    || Keyboard.current.rightShiftKey.isPressed;
+
+        bool slowMouse = Mouse.current.rightButton.isPressed;
+
+        float speedFactor = (slowKey || slowMouse) ? 0.5f : 1f;
+        // -----------------------------
+
         // Keyboard input
-
         if (useKeyboard && Keyboard.current != null)
-
         {
             float horizontalInput = 0f;
 
             if (Keyboard.current.aKey.isPressed)
-
                 horizontalInput = -1f;
 
             if (Keyboard.current.dKey.isPressed)
-
                 horizontalInput = 1f;
 
-            if (horizontalInput != 0f)
+            targetX += horizontalInput * keyboardMoveSpeed * speedFactor * Time.deltaTime;
 
+            if (horizontalInput != 0)
             {
-                targetX += horizontalInput * keyboardMoveSpeed * Time.deltaTime;
-
-                overwriteKeyboard = false;
-
                 Cursor.visible = false;
+                overwriteKeyboard = false;
             }
         }
 
         // Mouse input
-
         if (useMouse && Mouse.current != null)
-
         {
             Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-
-            if (!overwriteKeyboard && Mathf.Abs(mouseDelta.x) > mouseMoveThreshold)
-
-                overwriteKeyboard = true;
+            if (!overwriteKeyboard) overwriteKeyboard = Mathf.Abs(mouseDelta.x) > mouseMoveThreshold;
 
             if (overwriteKeyboard)
-
             {
                 Cursor.visible = true;
-
                 Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
 
                 Vector3 mouseWorldPos = mainCam.ScreenToWorldPoint(
@@ -98,20 +84,21 @@ public class PaddleController : MonoBehaviour
                     )
                 );
 
-                targetX = Mathf.MoveTowards(currentX, mouseWorldPos.x, mouseFollowSpeed * Time.deltaTime);
+                targetX = Mathf.MoveTowards(
+                    currentX,
+                    mouseWorldPos.x,
+                    mouseFollowSpeed * speedFactor * Time.deltaTime
+                );
             }
         }
 
-        // Clamp binnen schermgrenzen, bijgewerkt elke frame voor correcte paddle-breedte
-
+        // Clamp + apply
         Vector4 bounds = ScreenWorldBounds.GetBounds(mainCam);
-
         float minX = bounds.x + halfPaddleWidth;
-
         float maxX = bounds.y - halfPaddleWidth;
 
         targetX = Mathf.Clamp(targetX, minX, maxX);
-
         transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
     }
+
 }

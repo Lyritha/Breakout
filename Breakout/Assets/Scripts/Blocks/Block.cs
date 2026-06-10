@@ -18,6 +18,9 @@ public class Block : MonoBehaviour
         Score.Add(score);
         if (Screenshake.Instance != null) Screenshake.Instance.Shake();
 
+        GetComponent<BlockAudio>()?.PlayBreakSound();
+        GetComponent<BlockParticleEffect>()?.SpawnParticles();
+
         Destroy(gameObject);
     }
 }

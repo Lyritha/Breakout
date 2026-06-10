@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5197281635450746852}
   - component: {fileID: 7486752212371071805}
   - component: {fileID: 3491548388984989183}
+  - component: {fileID: 2307917806032927808}
+  - component: {fileID: -3923056129355179773}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -164,3 +166,29 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2307917806032927808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736957091171477443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd393780f985f14eb45f739b5b1c844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockAudio
+  breakSound: {fileID: 8300000, guid: e44ac5ead6ef1eb47864d8113090a2ba, type: 3}
+--- !u!114 &-3923056129355179773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736957091171477443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e5482cb2c163a41b2271ed9b715aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockParticleEffect
+  particlePrefab: {fileID: 7772551497742264809, guid: 0337c97f79f4e0f4a92757c0fe0a3942, type: 3}

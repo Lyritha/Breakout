@@ -58,7 +58,17 @@ public class LevelManager : MonoBehaviour
         unlockedLevelIndex = Mathf.Max(unlockedLevelIndex, currentLevelIndex);
         PlayerPrefs.SetInt("UnlockedLevel", unlockedLevelIndex);
 
-        LevelChanged?.Invoke(currentLevel);
+        switch (currentLevel.levelType)
+        {
+            default:
+            case LevelType.Default:
+                LevelChanged?.Invoke(currentLevel);
+            break;
+
+            case LevelType.Boss:
+                Debug.Log("this is a boss fight");
+            break;
+        }
     }
 
     public bool HasNextLevel()
@@ -71,11 +81,7 @@ public class LevelManager : MonoBehaviour
         return hasNextLevel;
     }
 
-    public bool IsLevelUnlocked(int index)
-    {
-        return index <= unlockedLevelIndex;
-    }
-
+    public bool IsLevelUnlocked(int index) => index <= unlockedLevelIndex;
 
     public LevelDefinition CurrentLevel => currentLevel;
     public LevelDefinition[] Levels => levels.levels;
