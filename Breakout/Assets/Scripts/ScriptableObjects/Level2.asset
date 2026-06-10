@@ -12,36 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a86abb59ed8b442a73f6bb20123194, type: 3}
   m_Name: Level2
   m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
-  levelName: Level 2
-  levelColor: {r: 1, g: 0.6489907, b: 0, a: 1}
+  levelType: 0
+  levelName: The wall
+  levelColor: {r: 1, g: 0.93161905, b: 0.19999999, a: 1}
   rows:
-  - color: {r: 1, g: 0.6315371, b: 0, a: 1}
-    score: 10
-    slots: 0001010101010100
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
-    slots: 010000010101000000
-  - color: {r: 1, g: 0.5803922, b: 0, a: 1}
-    score: 10
-    slots: 0101010000010101
+    slots: 00
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
-    slots: 000000000000000000
-  - color: {r: 1, g: 0.6238313, b: 0, a: 1}
+    slots: 00
+  - color: {r: 1, g: 0.93161905, b: 0.19999999, a: 1}
+    score: 15
+    slots: 00010101010101010100
+  - color: {r: 1, g: 0.57505643, b: 0.19811308, a: 1}
+    score: 15
+    slots: 0001010101000101010100
+  - color: {r: 1, g: 0.93161905, b: 0.19999999, a: 1}
+    score: 15
+    slots: 000001010001010001010100
+  - color: {r: 1, g: 0.57505643, b: 0.19811308, a: 1}
     score: 10
-    slots: 0000000000000000
+    slots: 0100000101010101000001
+  - color: {r: 1, g: 0.93161905, b: 0.19999999, a: 1}
+    score: 10
+    slots: 00000101000001010000
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
-    slots: 00000000000000000000
-  - color: {r: 1, g: 0.6611853, b: 0, a: 1}
-    score: 10
-    slots: 0100010101010001
+    slots: 00
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
-    slots: 010001010001010001
-  - color: {r: 1, g: 0.60263634, b: 0, a: 1}
-    score: 10
-    slots: 0001010101010100
+    slots: 00
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
-    slots: 01010100010101
+    slots: 00
