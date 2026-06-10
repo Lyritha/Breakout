@@ -1,0 +1,88 @@
+using System;
+using UnityEngine;
+
+public class LevelManager : MonoBehaviour
+{
+    public static LevelManager Instance { get; private set; }
+
+    public static event Action LevelRequested;
+    public static event Action<LevelDefinition> LevelChanged;
+
+    [SerializeField]
+    private LevelList levels;
+    [SerializeField]
+    private LevelDefinition currentLevel;
+    [SerializeField]
+    private int currentLevelIndex;
+
+    private int unlockedLevelIndex;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // later loaded from playerprefs
+        unlockedLevelIndex = PlayerPrefs.GetInt("UnlockedLevel", 0);
+    }
+
+    public bool LoadNextLevel()
+    {
+        int nextIndex = currentLevelIndex + 1;
+        if (nextIndex >= levels.levels.Length)
+        {
+            Debug.Log("No more levels to load.");
+            return false;
+        }
+        LoadLevel(nextIndex);
+        return true;
+    }
+
+    public void LoadLevel(int index)
+    {
+        if (index < 0 || index >= levels.levels.Length)
+        {
+            Debug.LogError("Invalid level index: " + index);
+            return;
+        }
+
+        currentLevelIndex = index;
+        currentLevel = levels.levels[currentLevelIndex];
+
+        unlockedLevelIndex = Mathf.Max(unlockedLevelIndex, currentLevelIndex);
+        PlayerPrefs.SetInt("UnlockedLevel", unlockedLevelIndex);
+
+        switch (currentLevel.levelType)
+        {
+            default:
+            case LevelType.Default:
+                LevelChanged?.Invoke(currentLevel);
+            break;
+
+            case LevelType.Boss:
+                Debug.Log("this is a boss fight");
+            break;
+        }
+    }
+
+    public bool HasNextLevel()
+    {
+        bool hasNextLevel = currentLevelIndex + 1 < levels.levels.Length;
+
+        // only call this if there are other levels, otherwise it will be called on the last level and cause issues with the next level screen
+        if (hasNextLevel) LevelRequested?.Invoke();
+
+        return hasNextLevel;
+    }
+
+    public bool IsLevelUnlocked(int index) => index <= unlockedLevelIndex;
+
+    public LevelDefinition CurrentLevel => currentLevel;
+    public LevelDefinition[] Levels => levels.levels;
+}

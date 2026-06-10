@@ -89,14 +89,14 @@ public class BallBounce : MonoBehaviour
 
         if (contact.normal.y < 0.5f)
         {
-            // Onderkant — bal verloren
+            // Onderkant ï¿½ bal verloren
             if (contact.point.y < paddleController.transform.position.y)
             {
                 GameEvents.onBallLost?.Invoke();
                 return;
             }
 
-            // Zijkant — duw omhoog
+            // Zijkant ï¿½ duw omhoog
             Vector2 escapeDir = new Vector2(contact.normal.x, 0.5f).normalized;
             rb.linearVelocity = escapeDir * currentSpeed;
             currentVelocity = rb.linearVelocity;

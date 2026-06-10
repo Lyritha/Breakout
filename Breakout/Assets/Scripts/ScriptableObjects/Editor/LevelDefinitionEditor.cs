@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 [CustomEditor(typeof(LevelDefinition))]
@@ -7,102 +8,165 @@ public class LevelDefinitionEditor : Editor
     private const float BoxSize = 33f;
     private const float BoxSpacing = 3f;
 
+    private ReorderableList rowList;
+
+    private void OnEnable()
+    {
+        SerializedProperty rowsProp = serializedObject.FindProperty("rows");
+
+        rowList = new ReorderableList(
+            serializedObject,
+            rowsProp,
+            draggable: true,
+            displayHeader: true,
+            displayAddButton: true,
+            displayRemoveButton: true
+        );
+
+        rowList.drawHeaderCallback = rect =>
+        {
+            EditorGUI.LabelField(rect, "Rows");
+        };
+
+        rowList.elementHeightCallback = index =>
+        {
+            return EditorGUIUtility.singleLineHeight * 2.2f;
+        };
+
+        rowList.drawElementCallback = (rect, index, active, focused) =>
+        {
+            LevelDefinition level = (LevelDefinition)target;
+            LevelRow row = level.rows[index];
+
+            int widest = GetWidest(level);
+
+            rect.y += 2;
+            DrawRow(rect, row, widest);
+        };
+    }
+
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+
         LevelDefinition level = (LevelDefinition)target;
         level.rows ??= new LevelRow[0];
 
-        int widest = GetWidest(level);
+        level.levelType = (LevelType)EditorGUILayout.EnumPopup("Level Type", level.levelType);
 
-        EditorGUILayout.Space(10);
+        EditorGUILayout.BeginHorizontal();
+        level.levelColor = EditorGUILayout.ColorField(level.levelColor, GUILayout.Width(60));
+        level.levelName = EditorGUILayout.TextField(level.levelName);
+        EditorGUILayout.EndHorizontal();
 
-        for (int i = 0; i < level.rows.Length; i++)
+        if (level.levelType != LevelType.Boss)
         {
-            DrawRow(level.rows[i], widest);
-            EditorGUILayout.Space(5);
+            EditorGUILayout.Space(10);
+            rowList.DoLayoutList();
         }
 
-        DrawAddRemove(level);
+        serializedObject.ApplyModifiedProperties();
 
-        if (GUI.changed)
-            EditorUtility.SetDirty(level);
+        if (GUI.changed) EditorUtility.SetDirty(level);
     }
+
+    // ---------------------------------------------------------
+    // RECT-BASED DRAWING (NO GUILayout inside list elements)
+    // ---------------------------------------------------------
 
     int GetWidest(LevelDefinition level)
     {
         int widest = 0;
 
         foreach (LevelRow r in level.rows)
-            if (r?.slots != null) widest = Mathf.Max(widest, r.slots.Length);
+            if (r?.slots != null)
+                widest = Mathf.Max(widest, r.slots.Length);
 
         return widest;
     }
 
-    void DrawRow(LevelRow row, int widest)
+    void DrawRow(Rect rect, LevelRow row, int widest)
     {
-        EditorGUILayout.BeginHorizontal();
+        float x = rect.x;
+        float y = rect.y;
+        float h = EditorGUIUtility.singleLineHeight;
 
-        row.color = EditorGUILayout.ColorField(row.color, GUILayout.Width(60));
-        row.score = EditorGUILayout.IntField(new GUIContent("", "Score for this row"), row.score, GUILayout.Width(50));
+        // Color
+        Rect colorRect = new Rect(x, y, 60, h);
+        row.color = EditorGUI.ColorField(colorRect, row.color);
+        x += 65;
 
-        row.slots ??= new bool[1];
+        // Score
+        Rect scoreRect = new Rect(x, y, 50, h);
+        row.score = EditorGUI.IntField(scoreRect, row.score);
+        x += 55;
 
-        DrawRowButtons(row);
-        DrawPadding(row, widest);
+        // Buttons
+        x = DrawRowButtons(rect, row, x, y);
 
-        for (int s = 0; s < row.slots.Length; s++) DrawSlot(row, s);
+        // Padding
+        x += GetPadding(row, widest);
 
-        EditorGUILayout.EndHorizontal();
+        // Slots
+        for (int i = 0; i < row.slots.Length; i++)
+        {
+            Rect slotRect = new Rect(x, y, BoxSize, BoxSize / 2f);
+            DrawSlot(row, i, slotRect);
+            x += BoxSize + BoxSpacing;
+        }
+
+        Rect colRect = new Rect(x, y, 50, h);
+        EditorGUI.LabelField(colRect, row.slots.Length.ToString());
     }
 
-    void DrawRowButtons(LevelRow row)
-    {
-        if (GUILayout.Button("+", GUILayout.Width(25))) ArrayUtility.Add(ref row.slots, false);
-
-        if (GUILayout.Button("-", GUILayout.Width(25)))
-            if (row.slots.Length > 1) ArrayUtility.RemoveAt(ref row.slots, row.slots.Length - 1);
-
-        if (GUILayout.Button("Fill", GUILayout.Width(40)))
-            for (int i = 0; i < row.slots.Length; i++) row.slots[i] = true;
-
-        if (GUILayout.Button("Empty", GUILayout.Width(50)))
-            for (int i = 0; i < row.slots.Length; i++) row.slots[i] = false;
-    }
-
-    void DrawPadding(LevelRow row, int widest)
+    float GetPadding(LevelRow row, int widest)
     {
         int missing = widest - row.slots.Length;
-        float pad = missing * (BoxSize + BoxSpacing) * 0.5f;
-        GUILayout.Space(pad);
+        return missing * (BoxSize + BoxSpacing) * 0.5f;
     }
 
-    void DrawSlot(LevelRow row, int index)
+    float DrawRowButtons(Rect rect, LevelRow row, float x, float y)
     {
-        float h = BoxSize / 2f;
-        float rowH = EditorGUIUtility.singleLineHeight;
-        float offset = (rowH - h) * 0.5f;
+        float h = EditorGUIUtility.singleLineHeight;
 
-        Rect r = GUILayoutUtility.GetRect(BoxSize, h, GUILayout.Width(BoxSize), GUILayout.Height(h));
-        r.y += offset;
+        if (GUI.Button(new Rect(x, y, 25, h), "+"))
+            ArrayUtility.Add(ref row.slots, false);
+        x += 30;
 
+        if (GUI.Button(new Rect(x, y, 25, h), "-"))
+            if (row.slots.Length > 1)
+                ArrayUtility.RemoveAt(ref row.slots, row.slots.Length - 1);
+        x += 30;
+
+        if (GUI.Button(new Rect(x, y, 40, h), "Fill"))
+            for (int i = 0; i < row.slots.Length; i++)
+                row.slots[i] = true;
+        x += 45;
+
+        if (GUI.Button(new Rect(x, y, 50, h), "Empty"))
+            for (int i = 0; i < row.slots.Length; i++)
+                row.slots[i] = false;
+        x += 55;
+
+        return x;
+    }
+
+    void DrawSlot(LevelRow row, int index, Rect r)
+    {
         DrawSlotBackground(row, index, r);
-        DrawSlotToggle(row, index, r);
-
-        GUILayout.Space(BoxSpacing);
+        row.slots[index] = GUI.Toggle(r, row.slots[index], GUIContent.none, GUIStyle.none);
     }
 
     void DrawSlotBackground(LevelRow row, int index, Rect r)
     {
         if (row.slots[index])
         {
-            // Full‑size colored block
             EditorGUI.DrawRect(r, row.color);
             return;
         }
 
-        // Smaller centered grey block
         float shrink = 0.5f;
-        Rect inner = new(
+        Rect inner = new Rect(
             r.x + (r.width * (1f - shrink) * 0.5f),
             r.y + (r.height * (1f - shrink) * 0.5f),
             r.width * shrink,
@@ -110,23 +174,5 @@ public class LevelDefinitionEditor : Editor
         );
 
         EditorGUI.DrawRect(inner, new Color(0.4f, 0.4f, 0.4f));
-    }
-
-
-    void DrawSlotToggle(LevelRow row, int index, Rect r)
-    {
-        row.slots[index] = GUI.Toggle(r, row.slots[index], GUIContent.none, GUIStyle.none);
-    }
-
-    void DrawAddRemove(LevelDefinition level)
-    {
-        EditorGUILayout.Space(10);
-
-        if (GUILayout.Button("Add Row"))
-            ArrayUtility.Add(ref level.rows, new LevelRow { slots = new bool[5] });
-
-        if (GUILayout.Button("Remove Last Row"))
-            if (level.rows.Length > 0)
-                ArrayUtility.RemoveAt(ref level.rows, level.rows.Length - 1);
     }
 }

@@ -26,6 +26,8 @@ public class PlayerHealth : MonoBehaviour
         health--;
         UpdateHealth();
         if (health <= 0) GameEvents.onGameOver?.Invoke();
+
+        GameEvents.onBallReset?.Invoke();
     }
 
     private void UpdateHealth()
