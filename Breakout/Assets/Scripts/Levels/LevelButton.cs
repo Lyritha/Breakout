@@ -23,6 +23,8 @@ public class LevelButton : MonoBehaviour
         background.color = level.levelColor;
 
         button.onClick.AddListener(OnClick);
+
+        if (!LevelManager.Instance.IsLevelUnlocked(index)) button.interactable = false;
     }
 
     public void OnClick()

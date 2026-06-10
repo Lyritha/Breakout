@@ -15,19 +15,19 @@ MonoBehaviour:
   levelName: Level 1
   levelColor: {r: 1, g: 0.19999999, b: 0.25707483, a: 1}
   rows:
-  - color: {r: 0.13785869, g: 1, b: 0, a: 1}
+  - color: {r: 1, g: 0.20000002, b: 0.25882354, a: 1}
     score: 10
     slots: 0100010000010001
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
     slots: 010000010101000000
-  - color: {r: 0.40122622, g: 1, b: 0, a: 1}
+  - color: {r: 1, g: 0.20000002, b: 0.25882354, a: 1}
     score: 10
     slots: 0101010000010101
   - color: {r: 1, g: 1, b: 1, a: 1}
     score: 10
     slots: 010000010001000001
-  - color: {r: 0.19177324, g: 1, b: 0, a: 1}
+  - color: {r: 1, g: 0.20000002, b: 0.25882354, a: 1}
     score: 10
     slots: 0101000101000101
   - color: {r: 1, g: 1, b: 1, a: 1}

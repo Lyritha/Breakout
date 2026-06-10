@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: LevelList
   m_EditorClassIdentifier: Assembly-CSharp::LevelList
   levels:
-  - {fileID: 11400000, guid: c59c885918abfa14f91b57656f44b9af, type: 2}
-  - {fileID: 11400000, guid: c46b4246a33d96945b17ec56c424117d, type: 2}
-  - {fileID: 11400000, guid: e0ec1c6526d965d4a938bd80c43feadc, type: 2}
+  - {fileID: 11400000, guid: a458d66c25a2f124ba1b065f111f196a, type: 2}
+  - {fileID: 11400000, guid: 44558aebcfee15741a170458f2b09fc5, type: 2}

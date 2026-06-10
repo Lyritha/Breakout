@@ -11,25 +11,22 @@ public class NextLevelScreen : MonoBehaviour
     {
         CloseMenu();
 
-        if (LevelManager.Instance != null)
-        {
-            LevelManager.LevelRequested += ShowMenu;
-        }
+        if (LevelManager.Instance != null) LevelManager.LevelRequested += OpenMenu;
     }
 
-    private void ShowMenu()
+    private void OnDestroy()
     {
-        OpenMenu();
+        Time.timeScale = 1;
+        if (LevelManager.Instance != null) LevelManager.LevelRequested -= OpenMenu;
     }
 
     public void NextLevel()
     {
         if (LevelManager.Instance == null) return;
+        Score.AddMult(0.05f);
 
-        Time.timeScale = 1;
         CloseMenu();
-
-        LevelManager.Instance.LoadNextLevel();
+        GameEvents.onBallReset?.Invoke();
     }
 
     public void MainMenu()
@@ -40,6 +37,8 @@ public class NextLevelScreen : MonoBehaviour
 
     private void OpenMenu()
     {
+        LevelManager.Instance.LoadNextLevel();
+
         Cursor.visible = true;
         Time.timeScale = 0;
 
@@ -59,14 +58,5 @@ public class NextLevelScreen : MonoBehaviour
         group.alpha = 0;
         group.interactable = false;
         group.blocksRaycasts = false;
-    }
-
-
-
-
-    private void OnDestroy()
-    {
-        Time.timeScale = 1;
-        if (LevelManager.Instance != null) LevelManager.LevelRequested -= ShowMenu;
     }
 }

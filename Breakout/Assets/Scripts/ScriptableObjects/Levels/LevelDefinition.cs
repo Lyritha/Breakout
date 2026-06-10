@@ -6,6 +6,6 @@ public class LevelDefinition : ScriptableObject
     public string levelName = "New Level";
     public Color levelColor = Color.white;
 
-    public LevelRow[] rows;
+    public LevelRow[] rows = new LevelRow[10];
 }
 

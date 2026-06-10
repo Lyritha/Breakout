@@ -39,6 +39,7 @@ public class BallBounce : MonoBehaviour
     {
         gameStarted = false;
         rb.linearVelocity = Vector2.zero;
+        transform.position = paddle.position + new Vector3(0f, offsetY, 0f);
     }
 
     private void StartBallMovement(Rigidbody2D rb)
@@ -77,11 +78,11 @@ public class BallBounce : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameEvents.onBallLost += Reset;
+        GameEvents.onBallReset += Reset;
     }
 
     private void OnDisable()
     {
-        GameEvents.onBallLost -= Reset;
+        GameEvents.onBallReset -= Reset;
     }
 }

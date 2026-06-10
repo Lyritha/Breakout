@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private int currentLevelIndex;
 
+    private int unlockedLevelIndex;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,6 +27,9 @@ public class LevelManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // later loaded from playerprefs
+        unlockedLevelIndex = PlayerPrefs.GetInt("UnlockedLevel", 0);
     }
 
     public bool LoadNextLevel()
@@ -50,6 +55,9 @@ public class LevelManager : MonoBehaviour
         currentLevelIndex = index;
         currentLevel = levels.levels[currentLevelIndex];
 
+        unlockedLevelIndex = Mathf.Max(unlockedLevelIndex, currentLevelIndex);
+        PlayerPrefs.SetInt("UnlockedLevel", unlockedLevelIndex);
+
         LevelChanged?.Invoke(currentLevel);
     }
 
@@ -63,6 +71,10 @@ public class LevelManager : MonoBehaviour
         return hasNextLevel;
     }
 
+    public bool IsLevelUnlocked(int index)
+    {
+        return index <= unlockedLevelIndex;
+    }
 
 
     public LevelDefinition CurrentLevel => currentLevel;
