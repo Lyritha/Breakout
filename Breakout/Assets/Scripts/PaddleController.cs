@@ -36,6 +36,15 @@ public class PaddleController : MonoBehaviour
         float currentX = transform.position.x;
         targetX = currentX;
 
+        // --- NEW: Slowdown factor ---
+        bool slowKey = Keyboard.current.leftShiftKey.isPressed
+                    || Keyboard.current.rightShiftKey.isPressed;
+
+        bool slowMouse = Mouse.current.rightButton.isPressed;
+
+        float speedFactor = (slowKey || slowMouse) ? 0.5f : 1f;
+        // -----------------------------
+
         // Keyboard input
         if (useKeyboard && Keyboard.current != null)
         {
@@ -47,13 +56,13 @@ public class PaddleController : MonoBehaviour
             if (Keyboard.current.dKey.isPressed)
                 horizontalInput = 1f;
 
-            targetX += horizontalInput * keyboardMoveSpeed * Time.deltaTime;
+            targetX += horizontalInput * keyboardMoveSpeed * speedFactor * Time.deltaTime;
+
             if (horizontalInput != 0)
             {
                 Cursor.visible = false;
                 overwriteKeyboard = false;
             }
-
         }
 
         // Mouse input
@@ -75,17 +84,21 @@ public class PaddleController : MonoBehaviour
                     )
                 );
 
-                targetX = Mathf.MoveTowards(currentX, mouseWorldPos.x, mouseFollowSpeed * Time.deltaTime);
+                targetX = Mathf.MoveTowards(
+                    currentX,
+                    mouseWorldPos.x,
+                    mouseFollowSpeed * speedFactor * Time.deltaTime
+                );
             }
         }
 
+        // Clamp + apply
         Vector4 bounds = ScreenWorldBounds.GetBounds(mainCam);
-
         float minX = bounds.x + halfPaddleWidth;
         float maxX = bounds.y - halfPaddleWidth;
 
         targetX = Mathf.Clamp(targetX, minX, maxX);
-
         transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
     }
+
 }

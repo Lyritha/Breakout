@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56de56e1b1932ea499f1b66fa108d616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PaddleController
-  keyboardMoveSpeed: 10
-  mouseFollowSpeed: 10
+  keyboardMoveSpeed: 15
+  mouseFollowSpeed: 15
   useKeyboard: 1
   useMouse: 1
   mouseMoveThreshold: 0.01

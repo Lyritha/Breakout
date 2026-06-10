@@ -22,7 +22,7 @@ public class BlockAudio : MonoBehaviour
         temp.transform.position = transform.position;
         AudioSource tempSource = temp.AddComponent<AudioSource>();
         tempSource.clip = breakSound;
-        tempSource.volume = 1f;
+        tempSource.volume = .1f;
         tempSource.Play();
         Destroy(temp, breakSound.length);
     }
