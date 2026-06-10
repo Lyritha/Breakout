@@ -1037,6 +1037,8 @@ MonoBehaviour:
   flashOverlay: {fileID: 206412823}
   flashDuration: 0.5
   flashColor: {r: 1, g: 0, b: 0, a: 0.4}
+  loseLifeSound: {fileID: 0}
+  gameOverSound: {fileID: 0}
 --- !u!4 &904775627
 Transform:
   m_ObjectHideFlags: 0
@@ -1854,12 +1856,20 @@ PrefabInstance:
       value: Paddle
       objectReference: {fileID: 0}
     - target: {fileID: 5790070965992017569, guid: 5bca60aee4bc34b4b815427c02d9f303, type: 3}
+      propertyPath: m_Size.x
+      value: 2.488329
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790070965992017569, guid: 5bca60aee4bc34b4b815427c02d9f303, type: 3}
       propertyPath: m_Size.y
-      value: 0.10940257
+      value: 0.29124665
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790070965992017569, guid: 5bca60aee4bc34b4b815427c02d9f303, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.005835533
       objectReference: {fileID: 0}
     - target: {fileID: 5790070965992017569, guid: 5bca60aee4bc34b4b815427c02d9f303, type: 3}
       propertyPath: m_Offset.y
-      value: 0.09529872
+      value: -0.0024460554
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
