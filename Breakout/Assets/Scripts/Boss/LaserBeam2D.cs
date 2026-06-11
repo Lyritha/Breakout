@@ -77,6 +77,8 @@ public class LaserBeam2D : MonoBehaviour
             laserBeam.startWidth = w;
             laserBeam.endWidth = w;
 
+            if (Screenshake.Instance != null) Screenshake.Instance.Shake();
+
             yield return null;
         }
 

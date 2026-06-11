@@ -37,12 +37,12 @@ public class PaddleController : MonoBehaviour
         targetX = currentX;
 
         // --- NEW: Slowdown factor ---
-        bool slowKey = Keyboard.current.leftShiftKey.isPressed
+        bool fastKey = Keyboard.current.leftShiftKey.isPressed
                     || Keyboard.current.rightShiftKey.isPressed;
 
-        bool slowMouse = Mouse.current.rightButton.isPressed;
+        bool fastMouse = Mouse.current.rightButton.isPressed;
 
-        float speedFactor = (slowKey || slowMouse) ? 0.5f : 1f;
+        float speedFactor = (fastKey || fastMouse) ? 1f : 0.5f;
         // -----------------------------
 
         // Keyboard input
@@ -94,6 +94,8 @@ public class PaddleController : MonoBehaviour
 
         // Clamp + apply
         Vector4 bounds = ScreenWorldBounds.GetBounds(mainCam);
+        if (TryGetComponent(out SpriteRenderer sr)) halfPaddleWidth = sr.bounds.extents.x;
+
         float minX = bounds.x + halfPaddleWidth;
         float maxX = bounds.y - halfPaddleWidth;
 

@@ -4,39 +4,44 @@ using UnityEngine.UI;
 
 
 public class SpawnBoss : MonoBehaviour
-{
-    public static SpawnBoss instance;
-    
-    [SerializeField] GameObject bossPrefab; 
+{    
+    [SerializeField] BossHealth bossPrefab; 
     [SerializeField] GameObject bossHealth;
     [SerializeField] private GameObject canvas;
 
-    private void Awake()
+    private void Start()
     {
-        if (instance != null && instance != this)
+        bool hasManager = LevelManager.Instance != null;
+        if (hasManager)
         {
-            Destroy(this);
-            return;
+            LevelManager.LevelChanged += CheckSpawn;
+            CheckSpawn(LevelManager.Instance.CurrentLevel);
         }
-
-        instance = this;
     }
 
-    
+    private void OnDestroy()
+    {
+        if (LevelManager.Instance != null) LevelManager.LevelChanged -= CheckSpawn;
+    }
+
+    private void CheckSpawn(LevelDefinition definition)
+    {
+        if (definition.levelType == LevelType.Boss) Spawn();
+    }
+
     [ContextMenu("spawn")]
     public void Spawn()
     {
-        Vector3 spawnPosition = new Vector3(0, 2.38f, 0); //Is ff hard coded weet ik
+        Vector3 spawnPosition = new(0, 2.38f, 0);
 
-        GameObject boss = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
+        BossHealth boss = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
         GameObject ui = Instantiate(bossHealth, canvas.transform);
-        
-        
+        ui.transform.SetSiblingIndex(0);
+
+
+        // dennis this makes me suicidal, but i won't change it for now
         Image healthBar = ui.transform.Find("BossHealthFill").GetComponent<Image>();
-        boss.GetComponent<BossHealth>().SetHealthBarFill(healthBar);
-        
-
-
+        boss.SetHealthBarFill(healthBar);
     }
     
 }

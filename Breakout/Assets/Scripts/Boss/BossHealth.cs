@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviour
 {
-    private int currentHealth = 30;
-    private int maxHealth = 30;
+    private float currentHealth = 30;
+    private float maxHealth = 30;
     [SerializeField] private Image healthBarFill;
     public Image HealthBarFill => healthBarFill;
     
@@ -49,8 +49,10 @@ public class BossHealth : MonoBehaviour
         bossSpriteRenderer.color = originalColor;
     }
 
-    private void TakeDamage(int damage)
+    private void TakeDamage(float damage)
     {
+        if (Screenshake.Instance != null) Screenshake.Instance.Shake();
+
         currentHealth -= damage;
         FlashRed();
         UpdateHealthBar();
@@ -72,16 +74,17 @@ public class BossHealth : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<BallBounce>(out var ball))
         {
-            TakeDamage(1);
+            float damage = other.transform.position.y > transform.position.y ? 0.5f : 1;
+            TakeDamage(damage);
         }
     }
     
-    public int GetCurrentHealth()
+    public float GetCurrentHealth()
     {
         return currentHealth;
     }
 
-    public int GetMaxHealth()
+    public float GetMaxHealth()
     {
         return maxHealth;
     }

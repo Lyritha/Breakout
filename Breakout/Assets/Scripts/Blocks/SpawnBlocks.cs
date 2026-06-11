@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnBlocks : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private LevelDefinition defaultLevel;
 
     [SerializeField]
@@ -34,11 +34,14 @@ public class SpawnBlocks : MonoBehaviour
     {
         if (hasGenerated && SpawnedBlocks.Count == 0 && canWin)
         {
+            hasGenerated = false;
+
             if (LevelManager.Instance != null)
             {
                 if (!LevelManager.Instance.HasNextLevel()) Win();
                 // else load next level, handled by LevelChanged event
-            } else Win();
+            }
+            else Win();
         }
     }
 
@@ -50,6 +53,8 @@ public class SpawnBlocks : MonoBehaviour
 
     public void GenerateLevel(LevelDefinition level)
     {
+        if (level.levelType == LevelType.Boss) return;
+
         Bounds bounds = ScreenWorldBounds.GetPaddedBounds2D(Camera.main, padding);
 
         int rowCount = level.rows.Length;

@@ -6,4 +6,9 @@ public class ClearPlayerPrefs : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
+
+    public void SetMaxLevel()
+    {
+        PlayerPrefs.SetInt("UnlockedLevel", 999);
+    }
 }

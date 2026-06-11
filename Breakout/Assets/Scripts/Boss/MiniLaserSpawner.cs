@@ -23,28 +23,28 @@ public class MiniLaserSpawner : MonoBehaviour
 
         if (!spawned90 && current <= max * 0.9f)
         {
-            SpawnMiniLasers();
+            SpawnMiniLasers(0);
             spawned90 = true;
         }
 
         if (!spawned60 && current <= max * 0.6f)
         {
-            SpawnMiniLasers();
+            SpawnMiniLasers(.75f);
             spawned60 = true;
         }
         
         if (!spawned30 && current <= max * 0.3f)
         {
-            SpawnMiniLasers();
+            SpawnMiniLasers(1.5f);
             spawned30 = true;
         }
         
         
     }
 
-    private void SpawnMiniLasers()
+    private void SpawnMiniLasers(float offset)
     {
-        Vector3 spawnPosition = transform.position + new Vector3(0f, -1f, 0f);
+        Vector3 spawnPosition = transform.position + new Vector3(0f, -1f + -offset, 0f);
         Instantiate(miniLaserPrefab, spawnPosition, Quaternion.identity);
     }
 }

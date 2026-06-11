@@ -58,17 +58,7 @@ public class LevelManager : MonoBehaviour
         unlockedLevelIndex = Mathf.Max(unlockedLevelIndex, currentLevelIndex);
         PlayerPrefs.SetInt("UnlockedLevel", unlockedLevelIndex);
 
-        switch (currentLevel.levelType)
-        {
-            default:
-            case LevelType.Default:
-                LevelChanged?.Invoke(currentLevel);
-            break;
-
-            case LevelType.Boss:
-                Debug.Log("this is a boss fight");
-            break;
-        }
+        LevelChanged?.Invoke(currentLevel);
     }
 
     public bool HasNextLevel()
@@ -77,7 +67,6 @@ public class LevelManager : MonoBehaviour
 
         // only call this if there are other levels, otherwise it will be called on the last level and cause issues with the next level screen
         if (hasNextLevel) LevelRequested?.Invoke();
-
         return hasNextLevel;
     }
 

@@ -28,7 +28,7 @@ public class Screenshake : MonoBehaviour
     {
         if (shakeTimer > 0f)
         {
-            shakeTimer -= Time.deltaTime;
+            shakeTimer -= Time.unscaledDeltaTime;
             transform.localPosition = originalPos + (Vector3)Random.insideUnitCircle * shakeStrength;
         }
         else
