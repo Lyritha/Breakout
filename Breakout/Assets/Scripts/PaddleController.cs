@@ -50,10 +50,10 @@ public class PaddleController : MonoBehaviour
         {
             float horizontalInput = 0f;
 
-            if (Keyboard.current.aKey.isPressed)
+            if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
                 horizontalInput = -1f;
 
-            if (Keyboard.current.dKey.isPressed)
+            if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
                 horizontalInput = 1f;
 
             targetX += horizontalInput * keyboardMoveSpeed * speedFactor * Time.deltaTime;

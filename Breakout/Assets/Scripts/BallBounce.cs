@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
@@ -30,7 +31,7 @@ public class BallBounce : MonoBehaviour
 
         transform.position = paddle.position + new Vector3(0f, offsetY, 0f);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Mouse.current.leftButton.isPressed)
         {
             gameStarted = true;
             StartBallMovement();
